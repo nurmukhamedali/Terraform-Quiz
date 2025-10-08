@@ -1,171 +1,39 @@
 [
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    },
-    {
-        "number": 1,
-        "question": "Bla Bla Bla",
-        "question_type": "radio",
-        "answers": [
-            {
-                "variant": "",
-                "text": "text"
-            }
-        ],
-        "correct_answer": "variant",
-        "answer_feedback": ""
-    }
+  {
+    "number": 1,
+    "question": "Identify this flag:",
+    "question_type": "radio",
+    "question_images": ["images/france_flag.png"],
+    "options": [
+      { "text": "France", "answer_image": null },
+      { "text": "Italy", "answer_image": null },
+      { "text": "Russia", "answer_image": null },
+      { "text": "Netherlands", "answer_image": null }
+    ],
+    "answer": "France",
+    "answer_feedback": "This is the flag of France."
+  },
+  {
+    "number": 2,
+    "question": "Which animals are mammals?",
+    "question_type": "checkbox",
+    "question_images": ["images/lion.jpg"],
+    "options": [
+      { "text": "Lion", "answer_image": "images/lion_thumb.png" },
+      { "text": "Eagle", "answer_image": "images/eagle_thumb.png" },
+      { "text": "Shark", "answer_image": null },
+      { "text": "Elephant", "answer_image": "images/elephant_thumb.png" }
+    ],
+    "answer": ["Lion", "Elephant"],
+    "answer_feedback": "Lions and elephants are mammals."
+  },
+  {
+    "number": 3,
+    "question": "Who invented the practical light bulb?",
+    "question_type": "input",
+    "question_images": ["images/edison.jpg"],
+    "options": null,
+    "answer": ["Edison", "Thomas Edison"],
+    "answer_feedback": "Thomas Edison is most widely credited for inventing it."
+  }
 ]
