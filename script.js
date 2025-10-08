@@ -6,7 +6,44 @@ let timeRemaining = 0;
 async function loadQuestions() {
   const res = await fetch("questions.json");
   questions = await res.json();
+
+  // Get total available questions
+  const total = questions.length;
+  const startRange = document.getElementById("startRange");
+  const endRange = document.getElementById("endRange");
+  const startLabel = document.getElementById("startLabel");
+  const endLabel = document.getElementById("endLabel");
+  const modeSelect = document.getElementById("modeSelect");
+  
+  
+  document.getElementById("questionCountInfo").textContent =
+  `📘 Total questions available: ${total}`;
+
+
+  // Adjust range limits
+  startRange.max = total;
+  endRange.max = total;
+  startRange.value = 1;
+  endRange.value = total;
+  startLabel.textContent = 1;
+  endLabel.textContent = total;
+
+  // Disable unavailable modes dynamically
+  const first100 = modeSelect.querySelector('option[value="first100"]');
+  const second100 = modeSelect.querySelector('option[value="second100"]');
+
+  if (total < 100) {
+    first100.disabled = true;
+    second100.disabled = true;
+  } else if (total >= 100 && total < 200) {
+    first100.disabled = false;
+    second100.disabled = true;
+  } else {
+    first100.disabled = false;
+    second100.disabled = false;
+  }
 }
+
 
 function shuffleArray(arr) {
   return arr.sort(() => Math.random() - 0.5);
@@ -25,51 +62,42 @@ document.getElementById("modeSelect").onchange = e => {
   customRangeDiv.style.display = (mode === "custom") ? "block" : "none";
 };
 
-function startQuiz() {
-  const mode = document.getElementById("modeSelect").value;
-  const shuffle = document.getElementById("shuffle").checked;
-  userEmail = document.getElementById("email").value.trim();
+if (mode === "first100") {
+  if (questions.length < 100) {
+    alert("Not enough questions for the first 100 mode.");
+    return;
+  }
+  selectedQuestions = questions.slice(0, 100);
 
-  if (!userEmail) {
-    alert("Please enter your email.");
+} else if (mode === "second100") {
+  if (questions.length < 200) {
+    alert("Not enough questions for the second 100 mode.");
+    return;
+  }
+  selectedQuestions = questions.slice(100, 200);
+
+} else if (mode === "timed") {
+  if (questions.length < 20) {
+    alert("Not enough questions for time mode (needs at least 20).");
+    return;
+  }
+  selectedQuestions = shuffleArray(questions).slice(0, 20);
+  startTimer(120); // 2 minutes
+
+} else {
+  const startRange = parseInt(document.getElementById("startRange").value);
+  const endRange = parseInt(document.getElementById("endRange").value);
+
+  if (startRange < 1 || startRange >= endRange) {
+    alert("Please select a valid range.");
+    return;
+  }
+  if (endRange > questions.length) {
+    alert(`You only have ${questions.length} questions available.`);
     return;
   }
 
-  let selectedQuestions = [];
-
-  if (mode === "first100") {
-    selectedQuestions = questions.slice(0, 100);
-  } else if (mode === "second100") {
-    selectedQuestions = questions.slice(100, 200);
-  } else if (mode === "timed") {
-    selectedQuestions = shuffleArray(questions).slice(0, 20);
-    startTimer(120); // 2 minutes
-  } else {
-    const startRange = parseInt(document.getElementById("startRange").value);
-    const endRange = parseInt(document.getElementById("endRange").value);
-
-    if (startRange < 1 || endRange > questions.length || startRange >= endRange) {
-      alert("Please select a valid range (1–300).");
-      return;
-    }
-    selectedQuestions = questions.slice(startRange - 1, endRange);
-  }
-
-  if (shuffle && mode !== "timed") selectedQuestions = shuffleArray(selectedQuestions);
-
-  window.quizState = {
-    selectedQuestions,
-    currentIndex: 0,
-    score: 0,
-    startTime: new Date(),
-    timed: (mode === "timed"),
-  };
-
-  document.getElementById("registration").classList.add("hidden");
-  document.getElementById("quiz").classList.remove("hidden");
-  document.getElementById("timer").classList.toggle("hidden", mode !== "timed");
-
-  showQuestion();
+  selectedQuestions = questions.slice(startRange - 1, endRange);
 }
 
 function showQuestion() {
