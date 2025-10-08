@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Quiz App</h1>
+
+    <div id="registration">
+      <input type="email" id="email" placeholder="Enter your email" required />
+      <input type="number" id="startRange" placeholder="Start question #" min="1" />
+      <input type="number" id="endRange" placeholder="End question #" min="1" />
+      <label>
+        <input type="checkbox" id="shuffle" /> Shuffle questions
+      </label>
+      <button id="startBtn">Start Quiz</button>
+    </div>
+
+    <div id="quiz" class="hidden">
+      <div id="question-container"></div>
+      <div id="options"></div>
+      <button id="nextBtn" class="hidden">Next</button>
+    </div>
+
+    <div id="results" class="hidden">
+      <h2>Quiz Completed!</h2>
+      <p id="score"></p>
+      <p id="time"></p>
+      <h3>Leaderboard</h3>
+      <ul id="leaderboard"></ul>
+      <button id="restartBtn">Restart</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
