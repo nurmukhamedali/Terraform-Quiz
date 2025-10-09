@@ -115,6 +115,14 @@ button.disabled {
   margin-top: 10px;
 } 
 
+#emailInput {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin: 10px;
+} 
+
 #changeUserBtn {
   position: absolute;
   top: 15px;
