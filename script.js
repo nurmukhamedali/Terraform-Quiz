@@ -134,7 +134,7 @@ function showQuestion() {
   if (Array.isArray(q.question_images) && q.question_images.length > 0) {
     q.question_images.forEach(imgPath => {
       const img = document.createElement("img");
-      img.src = imgPath;
+      img.src = "images/" + imgPath;
       img.alt = "question image";
       img.className = "inline-img";
       questionContainer.appendChild(img);
