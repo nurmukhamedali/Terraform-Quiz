@@ -152,6 +152,7 @@ function showQuestion() {
   const optContainer = document.getElementById("options");
   const feedback = document.getElementById("feedback");
   const nextBtn = document.getElementById("nextBtn");
+  const submitBtn = document.getElementById("submitBtn");
 
   qContainer.innerHTML = `<h3>${q.number}. ${q.question}</h3>`;
   if (q.question_images && q.question_images.length)
@@ -162,6 +163,8 @@ function showQuestion() {
   optContainer.innerHTML = "";
   feedback.innerHTML = "";
   nextBtn.classList.add("hidden");
+  submitBtn.classList.remove("hidden");
+
 
   if (q.question_type === "input") {
     const inp = document.createElement("input");
@@ -187,14 +190,12 @@ function showQuestion() {
     });
   }
 
-  const submitBtn = document.getElementById("submitBtn");
   optContainer.appendChild(submitBtn);
   submitBtn.onclick = () => checkAnswer(q);
 
   document.getElementById("progress").textContent = 
     `Question ${quizState.currentIndex + 1} / ${quizState.selectedQuestions.length}`;
 
-  submitBtn.classList.add("hidden");
 }
 
 
@@ -202,6 +203,10 @@ function showQuestion() {
 function checkAnswer(q) {
   const feedback = document.getElementById("feedback");
   const nextBtn = document.getElementById("nextBtn");
+  const submitBtn = document.getElementById("submitBtn");
+
+  submitBtn.classList.add("hidden");
+
 
   let correct = Array.isArray(q.answer)
     ? q.answer.map(a => a.toLowerCase().trim())
