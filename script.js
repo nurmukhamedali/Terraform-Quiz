@@ -42,18 +42,18 @@ async function loadQuestions() {
 document.addEventListener("DOMContentLoaded", () => {
   const storedEmail = localStorage.getItem("quizUserEmail");
   const regDiv = document.getElementById("registration");
-  const quizDiv = document.getElementById("quizApp");
+  const modeDiv = document.getElementById("modeSelection");
   const changeUserBtn = document.getElementById("changeUserBtn");
 
   if (storedEmail) {
     // Skip registration
     regDiv.classList.add("hidden");
-    quizDiv.classList.remove("hidden");
+    modeDiv.classList.remove("hidden");
     changeUserBtn.classList.remove("hidden");
     quizState.userEmail = storedEmail;
   } else {
     regDiv.classList.remove("hidden");
-    quizDiv.classList.add("hidden");
+    modeDiv.classList.add("hidden");
   }
 
   // When user registers
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("quizUserEmail", email);
       quizState.userEmail = email;
       regDiv.classList.add("hidden");
-      quizDiv.classList.remove("hidden");
+      modeDiv.classList.remove("hidden");
       changeUserBtn.classList.remove("hidden");
     });
   }
