@@ -3,11 +3,11 @@ let userEmail = "";
 let timerInterval = null;
 let timeRemaining = 0;
 
+// Load questions and adjust UI ranges/modes
 async function loadQuestions() {
   const res = await fetch("questions.json");
   questions = await res.json();
 
-  // Get total available questions
   const total = questions.length;
   const startRange = document.getElementById("startRange");
   const endRange = document.getElementById("endRange");
@@ -15,7 +15,6 @@ async function loadQuestions() {
   const endLabel = document.getElementById("endLabel");
   const modeSelect = document.getElementById("modeSelect");
 
-  // Adjust range limits
   startRange.max = total;
   endRange.max = total;
   startRange.value = 1;
@@ -23,9 +22,9 @@ async function loadQuestions() {
   startLabel.textContent = 1;
   endLabel.textContent = total;
 
-  // Disable unavailable modes dynamically
   const first100 = modeSelect.querySelector('option[value="first100"]');
   const second100 = modeSelect.querySelector('option[value="second100"]');
+  const timed = modeSelect.querySelector('option[value="timed"]');
 
   if (total < 100) {
     first100.disabled = true;
@@ -37,8 +36,12 @@ async function loadQuestions() {
     first100.disabled = false;
     second100.disabled = false;
   }
-}
 
+  timed.disabled = total < 20;
+
+  const info = document.getElementById("questionCountInfo");
+  if (info) info.textContent = `📘 Total questions available: ${total}`;
+}
 
 function shuffleArray(arr) {
   return arr.sort(() => Math.random() - 0.5);
@@ -53,10 +56,11 @@ document.getElementById("endRange").oninput = e => {
 
 document.getElementById("modeSelect").onchange = e => {
   const mode = e.target.value;
-  const customRangeDiv = document.getElementById("customRange");
-  customRangeDiv.style.display = (mode === "custom") ? "block" : "none";
+  document.getElementById("customRange").style.display =
+    (mode === "custom") ? "block" : "none";
 };
 
+// ---- QUIZ START ----
 function startQuiz() {
   const mode = document.getElementById("modeSelect").value;
   const shuffle = document.getElementById("shuffle").checked;
@@ -70,27 +74,15 @@ function startQuiz() {
   let selectedQuestions = [];
 
   if (mode === "first100") {
-    if (questions.length < 100) {
-      alert("Not enough questions for the first 100 mode.");
-      return;
-    }
+    if (questions.length < 100) return alert("Not enough questions for this mode.");
     selectedQuestions = questions.slice(0, 100);
-
   } else if (mode === "second100") {
-    if (questions.length < 200) {
-      alert("Not enough questions for the second 100 mode.");
-      return;
-    }
+    if (questions.length < 200) return alert("Not enough questions for this mode.");
     selectedQuestions = questions.slice(100, 200);
-
   } else if (mode === "timed") {
-    if (questions.length < 20) {
-      alert("Not enough questions for time mode (needs at least 20).");
-      return;
-    }
+    if (questions.length < 20) return alert("Not enough questions for timed mode.");
     selectedQuestions = shuffleArray(questions).slice(0, 20);
-    startTimer(120); // 2 minutes
-
+    startTimer(120);
   } else {
     const startRange = parseInt(document.getElementById("startRange").value);
     const endRange = parseInt(document.getElementById("endRange").value);
@@ -100,13 +92,12 @@ function startQuiz() {
       return;
     }
     if (endRange > questions.length) {
-      alert(`You only have ${questions.length} questions available.`);
+      alert(`Only ${questions.length} questions are available.`);
       return;
     }
 
     selectedQuestions = questions.slice(startRange - 1, endRange);
   }
-
 
   if (shuffle && mode !== "timed") selectedQuestions = shuffleArray(selectedQuestions);
 
@@ -115,7 +106,7 @@ function startQuiz() {
     currentIndex: 0,
     score: 0,
     startTime: new Date(),
-    timed: (mode === "timed"),
+    timed: (mode === "timed")
   };
 
   document.getElementById("registration").classList.add("hidden");
@@ -125,11 +116,12 @@ function startQuiz() {
   showQuestion();
 }
 
+// ---- QUESTION RENDER ----
 function showQuestion() {
   const { selectedQuestions, currentIndex } = window.quizState;
   const q = selectedQuestions[currentIndex];
 
-  document.getElementById("progress").textContent = 
+  document.getElementById("progress").textContent =
     `Question ${currentIndex + 1} of ${selectedQuestions.length}`;
 
   const questionContainer = document.getElementById("question-container");
@@ -138,8 +130,7 @@ function showQuestion() {
   const feedbackEl = document.getElementById("feedback");
 
   questionContainer.innerHTML = `<p>${q.question}</p>`;
-  
-  // Render question images
+
   if (Array.isArray(q.question_images) && q.question_images.length > 0) {
     q.question_images.forEach(imgPath => {
       const img = document.createElement("img");
@@ -162,10 +153,11 @@ function showQuestion() {
       const input = document.createElement("input");
       input.type = q.question_type;
       input.name = "questionOption";
+      input.id = opt.id;
       input.value = opt.text;
 
       const span = document.createElement("span");
-      span.textContent = opt.text;
+      span.textContent = `${opt.id}. ${opt.text}`;
 
       label.appendChild(input);
       label.appendChild(span);
@@ -191,6 +183,7 @@ function showQuestion() {
     input.placeholder = "Type your answer...";
     input.id = "inputAnswer";
     optionsContainer.appendChild(input);
+
     const submitBtn = document.createElement("button");
     submitBtn.textContent = "Submit Answer";
     submitBtn.onclick = () => checkAnswer(q);
@@ -198,32 +191,42 @@ function showQuestion() {
   }
 }
 
-function normalizeAnswer(ans) {
-  if (Array.isArray(ans)) {
-    return ans.map(a => a.toLowerCase().trim());
-  } else if (typeof ans === "string") {
-    return [ans.toLowerCase().trim()];
-  }
-  return [];
-}
-
+// ---- ANSWER CHECK ----
 function checkAnswer(q) {
   const feedbackEl = document.getElementById("feedback");
   const nextBtn = document.getElementById("nextBtn");
 
-  const correctAnswers = normalizeAnswer(q.answer);
-  let userAnswers = [];
-
-  if (q.question_type === "radio" || q.question_type === "checkbox") {
-    document.querySelectorAll('input[name="questionOption"]:checked').forEach(input => {
-      userAnswers.push(input.value.toLowerCase().trim());
-    });
-  } else if (q.question_type === "input") {
-    const val = document.getElementById("inputAnswer").value.trim();
-    if (val) userAnswers = [val.toLowerCase()];
+  let correctAnswers = [];
+  if (Array.isArray(q.answer)) {
+    correctAnswers = q.answer.map(a => a.toString().toLowerCase().trim());
+  } else if (typeof q.answer === "string") {
+    if (q.question_type === "checkbox") {
+      correctAnswers = q.answer.split(",").map(a => a.toLowerCase().trim());
+    } else {
+      correctAnswers = [q.answer.toLowerCase().trim()];
+    }
   }
 
-  const isCorrect = 
+  let userAnswers = [];
+
+  if (q.question_type === "radio") {
+    const selected = document.querySelector('input[name="questionOption"]:checked');
+    if (selected) userAnswers.push(selected.id.toLowerCase().trim());
+  } else if (q.question_type === "checkbox") {
+    document.querySelectorAll('input[name="questionOption"]:checked').forEach(input => {
+      userAnswers.push(input.id.toLowerCase().trim());
+    });
+  } else if (q.question_type === "input") {
+    const val = document.getElementById("inputAnswer").value.trim().toLowerCase();
+    if (val) {
+      const validOptions = (q.options || []).map(o => o.text.toLowerCase().trim());
+      if (validOptions.includes(val) || correctAnswers.includes(val)) {
+        userAnswers.push(val);
+      }
+    }
+  }
+
+  const isCorrect =
     correctAnswers.length === userAnswers.length &&
     userAnswers.every(ans => correctAnswers.includes(ans));
 
@@ -238,6 +241,7 @@ function checkAnswer(q) {
   nextBtn.classList.remove("hidden");
 }
 
+// ---- QUIZ FLOW ----
 function nextQuestion() {
   const { selectedQuestions } = window.quizState;
   window.quizState.currentIndex++;
@@ -281,6 +285,7 @@ function restartQuiz() {
   document.getElementById("timer").classList.add("hidden");
 }
 
+// ---- TIMER ----
 function startTimer(seconds) {
   timeRemaining = seconds;
   updateTimerDisplay();
