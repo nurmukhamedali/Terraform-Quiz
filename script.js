@@ -57,19 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // When user registers
-  const regForm = document.getElementById("registrationForm");
-  if (regForm) {
-    regForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("emailInput").value.trim();
-      if (!email) return alert("Please enter your email");
-      localStorage.setItem("quizUserEmail", email);
-      quizState.userEmail = email;
-      regDiv.classList.add("hidden");
-      modeDiv.classList.remove("hidden");
-      changeUserBtn.classList.remove("hidden");
-    });
-  }
+  document.getElementById("registerBtn").onclick = () => {
+    const email = document.getElementById("emailInput").value.trim();
+    if (!email) return alert("Please enter your email.");
+    localStorage.setItem("quizUserEmail", email);
+    quizState.email = email;
+    regDiv.classList.add("hidden");
+    modeDiv.classList.remove("hidden");
+    changeUserBtn.classList.remove("hidden");
+  };
 
   // Allow changing user manually
   changeUserBtn.addEventListener("click", () => {
