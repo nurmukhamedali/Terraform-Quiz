@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     regDiv.classList.add("hidden");
     modeDiv.classList.remove("hidden");
     changeUserBtn.classList.remove("hidden");
-    quizState.userEmail = storedEmail;
+    quizState.email = storedEmail;
   } else {
     regDiv.classList.remove("hidden");
     modeDiv.classList.add("hidden");
