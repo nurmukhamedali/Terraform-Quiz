@@ -114,3 +114,21 @@ button.disabled {
   font-size: 16px;
   margin-top: 10px;
 } 
+
+#changeUserBtn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: #ff9800;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#changeUserBtn:hover {
+  background: #e68900;
+}
+

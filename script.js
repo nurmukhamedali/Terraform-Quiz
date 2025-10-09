@@ -38,15 +38,46 @@ async function loadQuestions() {
   if (info) info.textContent = `📘 Total questions available: ${total}`;
 }
 
-// Registration
-document.getElementById("registerBtn").onclick = () => {
-  const email = document.getElementById("emailInput").value.trim();
-  if (!email) return alert("Please enter your email.");
-  quizState.email = email;
-  regDiv.classList.add("hidden");
-  modeDiv.classList.remove("hidden");
-  generateModeButtons();
-};
+// Registration handling
+document.addEventListener("DOMContentLoaded", () => {
+  const storedEmail = localStorage.getItem("quizUserEmail");
+  const regDiv = document.getElementById("registration");
+  const quizDiv = document.getElementById("quizApp");
+  const changeUserBtn = document.getElementById("changeUserBtn");
+
+  if (storedEmail) {
+    // Skip registration
+    regDiv.classList.add("hidden");
+    quizDiv.classList.remove("hidden");
+    changeUserBtn.classList.remove("hidden");
+    quizState.userEmail = storedEmail;
+  } else {
+    regDiv.classList.remove("hidden");
+    quizDiv.classList.add("hidden");
+  }
+
+  // When user registers
+  const regForm = document.getElementById("registrationForm");
+  if (regForm) {
+    regForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("emailInput").value.trim();
+      if (!email) return alert("Please enter your email");
+      localStorage.setItem("quizUserEmail", email);
+      quizState.userEmail = email;
+      regDiv.classList.add("hidden");
+      quizDiv.classList.remove("hidden");
+      changeUserBtn.classList.remove("hidden");
+    });
+  }
+
+  // Allow changing user manually
+  changeUserBtn.addEventListener("click", () => {
+    localStorage.removeItem("quizUserEmail");
+    location.reload();
+  });
+});
+
 
 function generateModeButtons() {
   const total = questions.length; // Available questions
