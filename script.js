@@ -97,7 +97,7 @@ function generateModeButtons() {
   });
 }
 
-function shuffleArray(arr) {
+function shuffle(arr) {
   return arr.sort(() => Math.random() - 0.5);
 }
 
@@ -156,7 +156,7 @@ function showQuestion() {
   qContainer.innerHTML = `<h3>${q.number}. ${q.question}</h3>`;
   if (q.question_images && q.question_images.length)
     q.question_images.forEach(img => {
-      qContainer.innerHTML += `<img src="${img}" class="q-img" />`;
+      qContainer.innerHTML += `<img src="images/${img}" class="q-img" />`;
     });
 
   optContainer.innerHTML = "";
@@ -182,16 +182,19 @@ function showQuestion() {
       label.textContent = opt.text;
       div.appendChild(label);
       if (opt.answer_image)
-        div.innerHTML += `<img src="${opt.answer_image}" class="opt-img" />`;
+        div.innerHTML += `<img src="images/${opt.answer_image}" class="opt-img" />`;
       optContainer.appendChild(div);
     });
   }
 
+  const submitBtn = document.getElementById("submitBtn");
+  optContainer.appendChild(submitBtn);
+  submitBtn.onclick = () => checkAnswer(q);
+
   document.getElementById("progress").textContent = 
     `Question ${quizState.currentIndex + 1} / ${quizState.selectedQuestions.length}`;
 
-  const submitAction = () => checkAnswer(q);
-  optContainer.onclick = submitAction;
+  submitBtn.classList.add("hidden");
 }
 
 
@@ -219,13 +222,15 @@ function checkAnswer(q) {
 
   if (isCorrect) {
     quizState.score++;
-    feedback.innerHTML = `<span class="correct">✅ Correct!</span> ${q.answer_feedback}`;
+    feedback.innerHTML = `<span class="correct">✅</span> ${q.answer_feedback}`;
   } else {
-    feedback.innerHTML = `<span class="incorrect">❌ Incorrect.</span> ${q.answer_feedback}`;
+    feedback.innerHTML = `<span class="incorrect">❌</span> ${q.answer_feedback}`;
   }
 
   document.querySelectorAll("#options input").forEach(i => i.disabled = true);
+  submitBtn
   nextBtn.classList.remove("hidden");
+
   nextBtn.onclick = nextQuestion;
 }
 
