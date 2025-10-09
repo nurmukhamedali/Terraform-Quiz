@@ -1,88 +1,67 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f0f4f8;
+  background: #f6f8fb;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  padding: 40px;
 }
 
 .container {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  max-width: 600px;
-  width: 100%;
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 800px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .hidden { display: none; }
 
-button {
-  background: #0078d4;
-  color: #fff;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #005fa3;
-}
-
-#options button {
-  display: block;
-  width: 100%;
-  margin: 0.5rem 0;
-  background: #eee;
-  color: #000;
-}
-
-#options button.selected {
-  background: #0078d4;
-  color: #fff;
-}
-
-.feedback {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  border-radius: 8px;
-  background: #f9f9f9;
-  font-style: italic;
-}
-
-.correct { color: #2ecc71; font-weight: bold; }
-.incorrect { color: #e74c3c; font-weight: bold; }
-
-#progress {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-#timer {
-  font-weight: bold;
-  text-align: right;
-  margin-bottom: 10px;
-}
-
-.inline-img, .option-img {
-  max-width: 200px;
-  height: auto;
-  display: block;
-  margin: 0.5rem 0;
-  border-radius: 8px;
-  box-shadow: 0 0 4px rgba(0,0,0,0.2);
-}
-
-.option-item {
+.sections, .timedModes {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 0.4rem 0;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
-.option-item img.option-img {
-  max-width: 100px;
+button {
+  cursor: pointer;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: white;
+  transition: 0.2s;
 }
 
+button:hover { background: #0056b3; }
+
+button.disabled {
+  background: #ddd;
+  color: #777;
+  cursor: not-allowed;
+}
+
+#quizHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+#feedback {
+  margin: 10px 0;
+}
+
+.correct { color: green; }
+.incorrect { color: red; }
+
+#leaderboardTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+#leaderboardTable th, #leaderboardTable td {
+  border: 1px solid #ddd;
+  padding: 6px 10px;
+  text-align: left;
+}
+#leaderboardTable th { background: #eee; }

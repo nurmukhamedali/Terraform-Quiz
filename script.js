@@ -1,7 +1,29 @@
+// =========================
+// QUIZ CONFIGURATION
+// =========================
 let questions = [];
-let userEmail = "";
-let timerInterval = null;
-let timeRemaining = 0;
+
+// =========================
+// GLOBAL STATE
+// =========================
+const quizState = {
+  email: "",
+  mode: "",
+  startTime: null,
+  currentIndex: 0,
+  score: 0,
+  selectedQuestions: [],
+  timer: null,
+  timeLimit: 0
+};
+
+// =========================
+// UI HANDLERS
+// =========================
+const regDiv = document.getElementById("registration");
+const modeDiv = document.getElementById("modeSelection");
+const quizDiv = document.getElementById("quizContainer");
+const leaderboardDiv = document.getElementById("leaderboard");
 
 // Load questions and adjust UI ranges/modes
 async function loadQuestions() {
@@ -9,280 +31,253 @@ async function loadQuestions() {
   questions = await res.json();
 
   const total = questions.length;
-  const startRange = document.getElementById("startRange");
-  const endRange = document.getElementById("endRange");
-  const startLabel = document.getElementById("startLabel");
-  const endLabel = document.getElementById("endLabel");
-  const modeSelect = document.getElementById("modeSelect");
 
-  startRange.max = total;
-  endRange.max = total;
-  startRange.value = 1;
-  endRange.value = total;
-  startLabel.textContent = 1;
-  endLabel.textContent = total;
-
-  const first100 = modeSelect.querySelector('option[value="first100"]');
-  const second100 = modeSelect.querySelector('option[value="second100"]');
-  const timed = modeSelect.querySelector('option[value="timed"]');
-
-  if (total < 100) {
-    first100.disabled = true;
-    second100.disabled = true;
-  } else if (total >= 100 && total < 200) {
-    first100.disabled = false;
-    second100.disabled = true;
-  } else {
-    first100.disabled = false;
-    second100.disabled = false;
-  }
-
-  timed.disabled = total < 20;
+  generateModeButtons();
 
   const info = document.getElementById("questionCountInfo");
   if (info) info.textContent = `📘 Total questions available: ${total}`;
+}
+
+// Registration
+document.getElementById("registerBtn").onclick = () => {
+  const email = document.getElementById("emailInput").value.trim();
+  if (!email) return alert("Please enter your email.");
+  quizState.email = email;
+  regDiv.classList.add("hidden");
+  modeDiv.classList.remove("hidden");
+  generateModeButtons();
+};
+
+function generateModeButtons() {
+  const total = questions.length; // Available questions
+  const totalExpected = 400;
+
+  const sec20 = document.getElementById("sections20");
+  const sec100 = document.getElementById("sections100");
+
+  sec20.innerHTML = "";
+  sec100.innerHTML = "";
+
+  // 20-question sections
+  for (let i = 1; i <= totalExpected / 20; i++) {
+    const start = (i - 1) * 20 + 1;
+    const end = i * 20;
+    const btn = document.createElement("button");
+    btn.textContent = `${start}-${end}`;
+    if (end <= total) {
+      btn.onclick = () => startSectionMode(20, start, end);
+    } else {
+      btn.classList.add("disabled");
+      btn.disabled = true;
+    }
+    sec20.appendChild(btn);
+  }
+
+  // 100-question sections
+  for (let i = 1; i <= totalExpected / 100; i++) {
+    const start = (i - 1) * 100 + 1;
+    const end = i * 100;
+    const btn = document.createElement("button");
+    btn.textContent = `${start}-${end}`;
+    if (end <= total) {
+      btn.onclick = () => startSectionMode(100, start, end);
+    } else {
+      btn.classList.add("disabled");
+      btn.disabled = true;
+    }
+    sec100.appendChild(btn);
+  }
+
+  // Timed Modes
+  document.querySelectorAll(".modeBtn").forEach(btn => {
+    btn.onclick = () => {
+        if (btn.dataset.mode === "random20") startRandomMode(20, 180);
+        else if (btn.dataset.mode === "random50") startRandomMode(50, 360);
+    };
+  });
 }
 
 function shuffleArray(arr) {
   return arr.sort(() => Math.random() - 0.5);
 }
 
-document.getElementById("startRange").oninput = e => {
-  document.getElementById("startLabel").textContent = e.target.value;
-};
-document.getElementById("endRange").oninput = e => {
-  document.getElementById("endLabel").textContent = e.target.value;
-};
+// --- START QUIZ MODE ---
+function startSectionMode(count, start, end) {
+  quizState.mode = `regular_${count}`;
+  quizState.selectedQuestions = questions.filter(q => q.number >= start && q.number <= end);
+  quizState.timeLimit = 0;
+  startQuiz();
+}
 
-document.getElementById("modeSelect").onchange = e => {
-  const mode = e.target.value;
-  document.getElementById("customRange").style.display =
-    (mode === "custom") ? "block" : "none";
-};
+function startRandomMode(count, timeLimit) {
+  quizState.mode = `random_${count}`;
+  quizState.selectedQuestions = shuffle(questions).slice(0, count);
+  quizState.timeLimit = timeLimit;
+  startQuiz();
+}
 
 // ---- QUIZ START ----
 function startQuiz() {
-  const mode = document.getElementById("modeSelect").value;
-  const shuffle = document.getElementById("shuffle").checked;
-  userEmail = document.getElementById("email").value.trim();
-
-  if (!userEmail) {
-    alert("Please enter your email.");
-    return;
-  }
-
-  let selectedQuestions = [];
-
-  if (mode === "first100") {
-    if (questions.length < 100) return alert("Not enough questions for this mode.");
-    selectedQuestions = questions.slice(0, 100);
-  } else if (mode === "second100") {
-    if (questions.length < 200) return alert("Not enough questions for this mode.");
-    selectedQuestions = questions.slice(100, 200);
-  } else if (mode === "timed") {
-    if (questions.length < 20) return alert("Not enough questions for timed mode.");
-    selectedQuestions = shuffleArray(questions).slice(0, 20);
-    startTimer(120);
-  } else {
-    const startRange = parseInt(document.getElementById("startRange").value);
-    const endRange = parseInt(document.getElementById("endRange").value);
-
-    if (startRange < 1 || startRange >= endRange) {
-      alert("Please select a valid range.");
-      return;
-    }
-    if (endRange > questions.length) {
-      alert(`Only ${questions.length} questions are available.`);
-      return;
-    }
-
-    selectedQuestions = questions.slice(startRange - 1, endRange);
-  }
-
-  if (shuffle && mode !== "timed") selectedQuestions = shuffleArray(selectedQuestions);
-
-  window.quizState = {
-    selectedQuestions,
-    currentIndex: 0,
-    score: 0,
-    startTime: new Date(),
-    timed: (mode === "timed")
-  };
-
-  document.getElementById("registration").classList.add("hidden");
-  document.getElementById("quiz").classList.remove("hidden");
-  document.getElementById("timer").classList.toggle("hidden", mode !== "timed");
-
+  modeDiv.classList.add("hidden");
+  leaderboardDiv.classList.add("hidden");
+  quizDiv.classList.remove("hidden");
+  quizState.score = 0;
+  quizState.currentIndex = 0;
+  quizState.startTime = Date.now();
+  if (quizState.timeLimit > 0) startTimer();
   showQuestion();
+}
+
+function startTimer() {
+  const timerEl = document.getElementById("timer");
+  let remaining = quizState.timeLimit;
+  timerEl.textContent = formatTime(remaining);
+  quizState.timer = setInterval(() => {
+    remaining--;
+    timerEl.textContent = formatTime(remaining);
+    if (remaining <= 0) endQuiz();
+  }, 1000);
+}
+
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${s < 10 ? "0" + s : s}`;
 }
 
 // ---- QUESTION RENDER ----
 function showQuestion() {
-  const { selectedQuestions, currentIndex } = window.quizState;
-  const q = selectedQuestions[currentIndex];
-
-  document.getElementById("progress").textContent =
-    `Question ${currentIndex + 1} of ${selectedQuestions.length}`;
-
-  const questionContainer = document.getElementById("question-container");
-  const optionsContainer = document.getElementById("options");
+  const q = quizState.selectedQuestions[quizState.currentIndex];
+  const qContainer = document.getElementById("questionContainer");
+  const optContainer = document.getElementById("options");
+  const feedback = document.getElementById("feedback");
   const nextBtn = document.getElementById("nextBtn");
-  const feedbackEl = document.getElementById("feedback");
 
-  questionContainer.innerHTML = `<p>${q.question}</p>`;
-
-  if (Array.isArray(q.question_images) && q.question_images.length > 0) {
-    q.question_images.forEach(imgPath => {
-      const img = document.createElement("img");
-      img.src = "images/" + imgPath;
-      img.alt = "question image";
-      img.className = "inline-img";
-      questionContainer.appendChild(img);
+  qContainer.innerHTML = `<h3>${q.number}. ${q.question}</h3>`;
+  if (q.question_images && q.question_images.length)
+    q.question_images.forEach(img => {
+      qContainer.innerHTML += `<img src="${img}" class="q-img" />`;
     });
-  }
 
-  optionsContainer.innerHTML = "";
-  feedbackEl.innerHTML = "";
+  optContainer.innerHTML = "";
+  feedback.innerHTML = "";
   nextBtn.classList.add("hidden");
 
-  if (q.question_type === "radio" || q.question_type === "checkbox") {
+  if (q.question_type === "input") {
+    const inp = document.createElement("input");
+    inp.id = "inputAnswer";
+    inp.placeholder = "Type your answer...";
+    optContainer.appendChild(inp);
+  } else {
     q.options.forEach(opt => {
-      const label = document.createElement("label");
-      label.classList.add("option-item");
-
+      const div = document.createElement("div");
       const input = document.createElement("input");
       input.type = q.question_type;
       input.name = "questionOption";
       input.id = opt.id;
-      input.value = opt.text;
-
-      const span = document.createElement("span");
-      span.textContent = `${opt.id}. ${opt.text}`;
-
-      label.appendChild(input);
-      label.appendChild(span);
-
-      if (opt.answer_image) {
-        const img = document.createElement("img");
-        img.src = opt.answer_image;
-        img.alt = opt.text;
-        img.className = "option-img";
-        label.appendChild(img);
-      }
-
-      optionsContainer.appendChild(label);
+      input.value = opt.id;
+      div.appendChild(input);
+      const label = document.createElement("label");
+      label.htmlFor = opt.id;
+      label.textContent = opt.text;
+      div.appendChild(label);
+      if (opt.answer_image)
+        div.innerHTML += `<img src="${opt.answer_image}" class="opt-img" />`;
+      optContainer.appendChild(div);
     });
-
-    const submitBtn = document.createElement("button");
-    submitBtn.textContent = "Submit Answer";
-    submitBtn.onclick = () => checkAnswer(q);
-    optionsContainer.appendChild(submitBtn);
-  } else if (q.question_type === "input") {
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = "Type your answer...";
-    input.id = "inputAnswer";
-    optionsContainer.appendChild(input);
-
-    const submitBtn = document.createElement("button");
-    submitBtn.textContent = "Submit Answer";
-    submitBtn.onclick = () => checkAnswer(q);
-    optionsContainer.appendChild(submitBtn);
   }
+
+  document.getElementById("progress").textContent = 
+    `Question ${quizState.currentIndex + 1} / ${quizState.selectedQuestions.length}`;
+
+  const submitAction = () => checkAnswer(q);
+  optContainer.onclick = submitAction;
 }
+
 
 // ---- ANSWER CHECK ----
 function checkAnswer(q) {
-  const feedbackEl = document.getElementById("feedback");
+  const feedback = document.getElementById("feedback");
   const nextBtn = document.getElementById("nextBtn");
 
-  let correctAnswers = [];
-  if (Array.isArray(q.answer)) {
-    correctAnswers = q.answer.map(a => a.toString().toLowerCase().trim());
-  } else if (typeof q.answer === "string") {
-    if (q.question_type === "checkbox") {
-      correctAnswers = q.answer.split(",").map(a => a.toLowerCase().trim());
-    } else {
-      correctAnswers = [q.answer.toLowerCase().trim()];
-    }
-  }
-
-  let userAnswers = [];
+  let correct = Array.isArray(q.answer)
+    ? q.answer.map(a => a.toLowerCase().trim())
+    : [q.answer.toLowerCase().trim()];
+  let user = [];
 
   if (q.question_type === "radio") {
     const selected = document.querySelector('input[name="questionOption"]:checked');
-    if (selected) userAnswers.push(selected.id.toLowerCase().trim());
+    if (selected) user.push(selected.id.toLowerCase().trim());
   } else if (q.question_type === "checkbox") {
-    document.querySelectorAll('input[name="questionOption"]:checked').forEach(input => {
-      userAnswers.push(input.id.toLowerCase().trim());
-    });
+    document.querySelectorAll('input[name="questionOption"]:checked').forEach(i => user.push(i.id.toLowerCase().trim()));
   } else if (q.question_type === "input") {
     const val = document.getElementById("inputAnswer").value.trim().toLowerCase();
-    if (val) {
-      const validOptions = (q.options || []).map(o => o.text.toLowerCase().trim());
-      if (validOptions.includes(val) || correctAnswers.includes(val)) {
-        userAnswers.push(val);
-      }
-    }
+    if (val) user.push(val);
   }
 
-  const isCorrect =
-    correctAnswers.length === userAnswers.length &&
-    userAnswers.every(ans => correctAnswers.includes(ans));
+  const isCorrect = correct.length === user.length && user.every(a => correct.includes(a));
 
   if (isCorrect) {
-    window.quizState.score++;
-    feedbackEl.innerHTML = `<span class="correct">✅ Correct!</span> ${q.answer_feedback}`;
+    quizState.score++;
+    feedback.innerHTML = `<span class="correct">✅ Correct!</span> ${q.answer_feedback}`;
   } else {
-    feedbackEl.innerHTML = `<span class="incorrect">❌ Incorrect.</span> ${q.answer_feedback}`;
+    feedback.innerHTML = `<span class="incorrect">❌ Incorrect.</span> ${q.answer_feedback}`;
   }
 
-  document.querySelectorAll("#options input").forEach(inp => inp.disabled = true);
+  document.querySelectorAll("#options input").forEach(i => i.disabled = true);
   nextBtn.classList.remove("hidden");
+  nextBtn.onclick = nextQuestion;
 }
 
 // ---- QUIZ FLOW ----
 function nextQuestion() {
-  const { selectedQuestions } = window.quizState;
-  window.quizState.currentIndex++;
-
-  if (window.quizState.currentIndex < selectedQuestions.length) {
+  quizState.currentIndex++;
+  if (quizState.currentIndex < quizState.selectedQuestions.length) {
     showQuestion();
   } else {
     endQuiz();
   }
 }
 
+// --- QUIZ END ---
 function endQuiz() {
-  clearInterval(timerInterval);
+  if (quizState.timer) clearInterval(quizState.timer);
 
-  const endTime = new Date();
-  const duration = ((endTime - window.quizState.startTime) / 1000).toFixed(2);
-
-  document.getElementById("quiz").classList.add("hidden");
+  quizDiv.classList.add("hidden");
+  leaderboardDiv.classList.remove("hidden");
   document.getElementById("results").classList.remove("hidden");
 
-  const scoreText = `${userEmail} scored ${window.quizState.score} / ${window.quizState.selectedQuestions.length}`;
+  const elapsed = Math.floor((Date.now() - quizState.startTime) / 1000);
+  const modeKey = `leaderboard_${quizState.mode}`;
+  const lb = JSON.parse(localStorage.getItem(modeKey)) || [];
+
+  const scoreText = `You scored ${quizState.score} / ${quizState}`;
   document.getElementById("score").textContent = scoreText;
-  document.getElementById("time").textContent = `Time: ${duration}s`;
+  document.getElementById("time").textContent = `Time: ${elapsed}s`;
 
-  const leaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]");
-  leaderboard.push({ email: userEmail, score: window.quizState.score, time: parseFloat(duration) });
-  leaderboard.sort((a, b) => b.score - a.score || a.time - b.time);
-  localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+  lb.push({ email: quizState.email, score: quizState.score, time: elapsed });
+  lb.sort((a, b) => b.score - a.score || a.time - b.time);
+  localStorage.setItem(modeKey, JSON.stringify(lb));
 
-  const leaderboardEl = document.getElementById("leaderboard");
-  leaderboardEl.innerHTML = leaderboard
-    .slice(0, 10)
-    .map((e, i) => `<li>${i + 1}. ${e.email} - ${e.score} pts - ${e.time}s</li>`)
-    .join("");
+  renderLeaderboard(modeKey);
+}
+
+// --- DISPLAY LEADERBOARD ---
+function renderLeaderboard(key) {
+  const tbody = document.querySelector("#leaderboardTable tbody");
+  const data = JSON.parse(localStorage.getItem(key)) || [];
+  tbody.innerHTML = "";
+  data.forEach(row => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${row.email}</td><td>${row.score}</td><td>${row.time}</td>`;
+    tbody.appendChild(tr);
+  });
 }
 
 function restartQuiz() {
-  clearInterval(timerInterval);
   document.getElementById("results").classList.add("hidden");
-  document.getElementById("registration").classList.remove("hidden");
-  document.getElementById("timer").classList.add("hidden");
+  leaderboardDiv.classList.add("hidden");
+  modeDiv.classList.remove("hidden");
 }
 
 // ---- TIMER ----
@@ -308,8 +303,9 @@ function updateTimerDisplay() {
     `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-document.getElementById("startBtn").onclick = startQuiz;
-document.getElementById("nextBtn").onclick = nextQuestion;
+
+
+
 document.getElementById("restartBtn").onclick = restartQuiz;
 
 loadQuestions();
