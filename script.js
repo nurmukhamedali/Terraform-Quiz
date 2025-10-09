@@ -190,7 +190,6 @@ function showQuestion() {
     });
   }
 
-  optContainer.appendChild(submitBtn);
   submitBtn.onclick = () => checkAnswer(q);
 
   document.getElementById("progress").textContent = 

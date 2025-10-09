@@ -66,19 +66,51 @@ button.disabled {
 }
 #leaderboardTable th { background: #eee; }
 
+/* Question images */
 .q-img, .opt-img {
   display: block;
   max-width: 450px;
   height: auto;
-  margin: 10px 0;
+  margin: 12px 0;
   border-radius: 8px;
 }
 
-.submitBtn {
-  margin-top: 15px;
-  background: #28a745;
+/* Option styling */
+#options div {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #fafafa;
 }
 
-.submitBtn:hover {
-  background: #1e7e34;
+#options div:hover {
+  background-color: #f0f8ff;
+  border-color: #66a3ff;
 }
+
+#options input {
+  margin-right: 12px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+#options label {
+  cursor: pointer;
+  flex: 1;
+  font-size: 16px;
+}
+
+/* Input style for text questions */
+#inputAnswer {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-top: 10px;
+} 

@@ -2968,7 +2968,7 @@
     ],
     "options": null,
     "answer": [
-      "module.network.vpc_id"
+      "module.vpc.vpc_id"
     ],
     "answer_feedback": "To reference outputs from a module, use the syntax \"module.[MODULE_NAME].[OUTPUT_NAME]\"."
   },
