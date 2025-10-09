@@ -274,12 +274,6 @@ function renderLeaderboard(key) {
   });
 }
 
-function restartQuiz() {
-  document.getElementById("results").classList.add("hidden");
-  leaderboardDiv.classList.add("hidden");
-  modeDiv.classList.remove("hidden");
-}
-
 // ---- TIMER ----
 function startTimer(seconds) {
   timeRemaining = seconds;
@@ -303,9 +297,10 @@ function updateTimerDisplay() {
     `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-
-
-
-document.getElementById("restartBtn").onclick = restartQuiz;
+document.getElementById("backToMenu").onclick = () => {
+  document.getElementById("results").classList.add("hidden");
+  leaderboardDiv.classList.add("hidden");
+  modeDiv.classList.remove("hidden");
+};
 
 loadQuestions();
