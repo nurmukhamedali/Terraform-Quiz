@@ -113,7 +113,7 @@ function startRandomMode(count, timeLimit) {
   quizState.mode = `random_${count}`;
   quizState.selectedQuestions = shuffle(questions).slice(0, count);
   quizState.timeLimit = timeLimit;
-  startQuiz();
+  startQuiz();timeLimit
 }
 
 // ---- QUIZ START ----
@@ -128,16 +128,34 @@ function startQuiz() {
   showQuestion();
 }
 
-function startTimer() {
-  const timerEl = document.getElementById("timer");
-  let remaining = quizState.timeLimit;
-  timerEl.textContent = formatTime(remaining);
-  quizState.timer = setInterval(() => {
-    remaining--;
-    timerEl.textContent = formatTime(remaining);
-    if (remaining <= 0) endQuiz();
+// ---- TIMER ----
+function startTimer(seconds) {
+  timeRemaining = seconds;
+  updateTimerDisplay();
+
+  timerInterval = setInterval(() => {
+    timeRemaining--;
+    updateTimerDisplay();
+    if (timeRemaining <= 0) {
+      clearInterval(timerInterval);
+      alert("⏱ Time’s up!");
+      endQuiz();
+    }
   }, 1000);
 }
+
+function updateTimerDisplay() {
+  const minutes = Math.floor(timeRemaining / 60);
+  const seconds = timeRemaining % 60;
+  document.getElementById("timeRemaining").textContent =
+    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+document.getElementById("backToMenu").onclick = () => {
+  document.getElementById("results").classList.add("hidden");
+  leaderboardDiv.classList.add("hidden");
+  modeDiv.classList.remove("hidden");
+};
 
 function formatTime(sec) {
   const m = Math.floor(sec / 60);
@@ -192,8 +210,7 @@ function showQuestion() {
 
   submitBtn.onclick = () => checkAnswer(q);
 
-  document.getElementById("progress").textContent = 
-    `Question ${quizState.currentIndex + 1} / ${quizState.selectedQuestions.length}`;
+  document.getElementById("progress").textContent = `Question ${quizState.currentIndex + 1} / ${quizState.selectedQuestions.length}`;
 
 }
 
@@ -283,33 +300,7 @@ function renderLeaderboard(key) {
   });
 }
 
-// ---- TIMER ----
-function startTimer(seconds) {
-  timeRemaining = seconds;
-  updateTimerDisplay();
 
-  timerInterval = setInterval(() => {
-    timeRemaining--;
-    updateTimerDisplay();
-    if (timeRemaining <= 0) {
-      clearInterval(timerInterval);
-      alert("⏱ Time’s up!");
-      endQuiz();
-    }
-  }, 1000);
-}
 
-function updateTimerDisplay() {
-  const minutes = Math.floor(timeRemaining / 60);
-  const seconds = timeRemaining % 60;
-  document.getElementById("timeRemaining").textContent =
-    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-}
-
-document.getElementById("backToMenu").onclick = () => {
-  document.getElementById("results").classList.add("hidden");
-  leaderboardDiv.classList.add("hidden");
-  modeDiv.classList.remove("hidden");
-};
 
 loadQuestions();
