@@ -151,29 +151,47 @@ function startQuiz() {
   quizState.score = 0;
   quizState.currentIndex = 0;
   quizState.startTime = Date.now();
-  if (quizState.timeLimit > 0) startTimer(quizState.timeLimit);
+  if (quizState.timeLimit > 0) {
+    startTimer(quizState.timeLimit);
+  } else {
+    startStopwatch();
+  }
   showQuestion();
 }
 
 // ---- TIMER ----
 function startTimer(seconds) {
-  quizState.timer = seconds;
-  updateTimerDisplay();
+  updateTimerDisplay(seconds);
 
-  timerInterval = setInterval(() => {
-    quizState.timer--;
-    updateTimerDisplay();
-    if (quizState.timer <= 0) {
-      clearInterval(timerInterval);
+  quizState.timer = setInterval(() => {
+    seconds--;
+    updateTimerDisplay(seconds);
+    if (seconds <= 0) {
+      clearInterval(quizState.timer);
       alert("⏱ Time’s up!");
       endQuiz();
     }
   }, 1000);
 }
 
-function updateTimerDisplay() {
-  const minutes = Math.floor(quizState.timer / 60);
-  const seconds = quizState.timer % 60;
+function startStopwatch(){
+  let seconds = 0
+  updateTimerDisplay(seconds);
+
+  quizState.timer = setInterval(() => {
+    seconds++;
+    updateTimerDisplay(seconds);
+    if (seconds >= 1000) {
+      clearInterval(quizState.timer);
+      alert("⏱ Time’s up! You took too long on that test! Focus man.");
+      endQuiz();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
   document.getElementById("timer").textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 

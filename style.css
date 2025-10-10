@@ -98,6 +98,7 @@ button.disabled {
 #options input[type="radio"], #options input[type="checkbox"]{
   cursor: pointer;
   transform: scale(1.2);
+  margin-left: 20px;
 }
 
 #options label {
