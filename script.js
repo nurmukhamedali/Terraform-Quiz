@@ -267,13 +267,12 @@ function checkAnswer(q) {
 
   if (isCorrect) {
     quizState.score++;
-    feedback.innerHTML = `<span class="correct">✅</span> ${q.answer_feedback}`;
+    feedback.innerHTML = `<p><span class="correct">✅</span> ${q.answer_feedback}</p>`;
   } else {
-    feedback.innerHTML = `<span class="incorrect">❌</span> ${q.answer_feedback}`;
+    feedback.innerHTML = `<p><span class="incorrect">❌</span> ${q.answer_feedback}</p>`;
   }
 
   document.querySelectorAll("#options input").forEach(i => i.disabled = true);
-  submitBtn
   nextBtn.classList.remove("hidden");
 
   nextBtn.onclick = nextQuestion;
