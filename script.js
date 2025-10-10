@@ -201,7 +201,9 @@ function showQuestion() {
 
   optContainer.innerHTML = "";
   feedback.innerHTML = "";
+
   nextBtn.classList.add("hidden");
+  feedback.classList.add("hidden")
   submitBtn.classList.remove("hidden");
 
 
@@ -242,6 +244,7 @@ function checkAnswer(q) {
   const nextBtn = document.getElementById("nextBtn");
   const submitBtn = document.getElementById("submitBtn");
 
+  feedback.classList.remove("hidden")
   submitBtn.classList.add("hidden");
 
 
