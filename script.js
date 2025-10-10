@@ -318,7 +318,7 @@ function endQuiz() {
   const modeKey = `leaderboard_${quizState.mode}`;
   const lb = JSON.parse(localStorage.getItem(modeKey)) || [];
 
-  const scoreText = `You scored ${quizState.score} / ${quizState}`;
+  const scoreText = `You scored ${quizState.score} / ${quizState.selectedQuestions.length}`;
   document.getElementById("score").textContent = scoreText;
   document.getElementById("time").textContent = `Time: ${elapsed}s`;
 

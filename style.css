@@ -166,3 +166,7 @@ button.disabled {
   min-width: 100px;
   padding: 10px;
 }
+
+#backToMenu {
+  margin: 20px 0;
+}
