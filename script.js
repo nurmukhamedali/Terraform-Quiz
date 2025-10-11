@@ -23,6 +23,7 @@ const quizState = {
 const regDiv = document.getElementById("registration");
 const modeDiv = document.getElementById("modeSelection");
 const quizDiv = document.getElementById("quizContainer");
+const results = document.getElementById("results");
 
 // Load questions and adjust UI ranges/modes
 async function loadQuestions() {
@@ -179,7 +180,7 @@ function startStopwatch(){
   quizState.timer = setInterval(() => {
     seconds++;
     updateTimerDisplay(seconds);
-    if (seconds >= 1000) {
+    if (seconds >= 4000) {
       clearInterval(quizState.timer);
       alert("⏱ Time’s up! You took too long on that test! Focus man.");
       endQuiz();
@@ -195,7 +196,7 @@ function updateTimerDisplay(time) {
 
 
 document.getElementById("backToMenu").onclick = () => {
-  document.getElementById("results").classList.add("hidden");
+  results.classList.add("hidden");
   document.getElementById("questionCountInfo").classList.remove("hidden");
   modeDiv.classList.remove("hidden");
 };
@@ -309,16 +310,24 @@ function nextQuestion() {
 // --- QUIZ END ---
 function endQuiz() {
   if (quizState.timer) clearInterval(quizState.timer);
+  
 
   quizDiv.classList.add("hidden");
   document.getElementById("results").classList.remove("hidden");
 
   const elapsed = Math.floor((Date.now() - quizState.startTime) / 1000);
 
-  const scoreText = `🏆 You scored ${quizState.score} / ${quizState.selectedQuestions.length}`;
+  const scoreText = `🏆 You scored: ${quizState.score} / ${quizState.selectedQuestions.length}`;
   document.getElementById("score").textContent = scoreText;
   document.getElementById("time").textContent = `⏱️ Time: ${elapsed}s`;
 
+  quizState.mode = "";
+  quizState.score = 0;
+  quizState.selectedQuestions = [];
+  quizState.startTime = null;
+  quizState.currentIndex = 0;
+  quizState.timer = null;
+  quizState.timeLimit = 0;
 }
 
 

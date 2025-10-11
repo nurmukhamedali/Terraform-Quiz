@@ -18,7 +18,6 @@ body {
 
 
 
-.hidden { display: none; }
 
 .sections {
   display: grid;
@@ -150,7 +149,7 @@ body {
   line-height: 1.3em;
 }
 
-#results {
+#resultsContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -191,17 +190,17 @@ button.disabled {
   padding: 10px;
 }
 
-.submitBtn {
+#submitBtn {
   background-color: #28a745;
   color: white;
 }
-.submitBtn:hover { background-color: #218838; }
+#submitBtn:hover { background-color: #218838; }
 
-.nextBtn {
-  background-color: #007bff;
+#nextBtn, #backToMenu {
+  background-color: #5c4ee5;
   color: white;
 }
-.nextBtn:hover { background-color: #0069d9; }
+#nextBtn:hover, #backToMenu:hover { background-color: #7925E8; }
 
 
 #backToMenu {
@@ -312,3 +311,5 @@ button.disabled {
     grid-template-columns: auto auto auto;
   }
 }
+
+.hidden { display: none; }
