@@ -3,7 +3,7 @@ body {
   background: #f6f8fb;
   display: flex;
   justify-content: center;
-  padding: 40px;
+  padding: 100px 40px;
 }
 
 .container {
@@ -221,10 +221,12 @@ button.disabled {
 }
 
 #changeUserBtn:hover {
-  background: #e68900;
+  border: 1px solid white ;
 }
 
-
+#modeSelection button {
+  min-width: 85px;
+}
 /* ========== Tablets (landscape + portrait) ========== */
 @media (max-width: 1024px) {
   .container {
@@ -251,7 +253,7 @@ button.disabled {
 @media (max-width: 768px) {
   body {
     margin: 0;
-    padding: 0;
+    padding: 100px 0;
     background: #f8f9fa;
   }
 

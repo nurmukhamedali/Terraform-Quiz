@@ -198,6 +198,7 @@ function updateTimerDisplay(time) {
 
 document.getElementById("backToMenu").onclick = () => {
   document.getElementById("results").classList.add("hidden");
+  document.getElementById("questionCountInfo").classList.remove("hidden");
   leaderboardDiv.classList.add("hidden");
   modeDiv.classList.remove("hidden");
 };
@@ -210,6 +211,7 @@ function showQuestion() {
   const feedback = document.getElementById("feedback");
   const nextBtn = document.getElementById("nextBtn");
   const submitBtn = document.getElementById("submitBtn");
+  const info = document.getElementById("questionCountInfo");
 
   qContainer.innerHTML = `<h3>${q.number}. ${q.question}</h3>`;
   if (q.question_images && q.question_images.length)
@@ -220,6 +222,7 @@ function showQuestion() {
   optContainer.innerHTML = "";
   feedback.innerHTML = "";
 
+  info.classList.add("hidden");
   nextBtn.classList.add("hidden");
   feedback.classList.add("hidden")
   submitBtn.classList.remove("hidden");
