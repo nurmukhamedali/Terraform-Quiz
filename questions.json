@@ -1304,7 +1304,7 @@
   },
   {
     "number": 47,
-    "question": "FILL BLANK: Sorry not text on this question",
+    "question": "FILL BLANK: You need to specify a dependency manually. What resource meta-parameter can you use to make sure Terraform respects the dependency?",
     "question_type": "input",
     "question_images": [],
     "options": null,
