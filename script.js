@@ -318,7 +318,7 @@ function endQuiz() {
   const scoreText = `🏆 You scored ${quizState.score} / ${quizState.selectedQuestions.length}`;
   document.getElementById("score").textContent = scoreText;
   document.getElementById("time").textContent = `⏱️ Time: ${elapsed}s`;
-
+  
 }
 
 

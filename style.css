@@ -10,7 +10,6 @@ body {
   width: 800px;
   margin: 30px auto;
   padding: 20px;
-  padding-bottom: 100px;
   background: #fff;
   border-radius: 14px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -22,8 +21,8 @@ body {
 .hidden { display: none; }
 
 .sections, .timedModes {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
   gap: 8px;
   margin-bottom: 20px;
 }
@@ -213,16 +212,13 @@ button.disabled {
 
 #modeSelection button {
   min-width: 85px;
+  min-height: 40px;
 }
 /* ========== Tablets (landscape + portrait) ========== */
 @media (max-width: 1024px) {
   .container {
     margin: 20px auto;
     padding: 18px;
-  }
-
-  h1, h2, h3 {
-    font-size: 1.1em;
   }
 
   .option-label {
@@ -250,11 +246,6 @@ button.disabled {
     padding: 12px;
     border-radius: 0;
     box-shadow: none;
-  }
-
-  h1, h2, h3 {
-    font-size: 1em;
-    line-height: 1.3em;
   }
 
   .option-card {
@@ -298,5 +289,9 @@ button.disabled {
   .submitBtn {
     font-size: 13px;
     padding: 8px;
+  }
+
+  .sections, .timedModes {
+    grid-template-columns: auto auto auto;
   }
 }

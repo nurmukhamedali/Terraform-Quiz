@@ -50,9 +50,17 @@
 
     <!-- Quiz Mode Select -->
     <div id="modeSelection" class="hidden">
-      <h2>Select Quiz Mode</h2>
+      <h1>Select Quiz</h1>
 
-      <h3>20 Question Sections</h3>
+      <h3>Take a Test</h3>
+      <p><i>Random 20 / 50 questions out of full library.</i></p>
+      <div class="timedModes">
+        <button class="modeBtn" data-mode="random20">⚡ 20 Questions / 3 min</button>
+        <button class="modeBtn" data-mode="random50">🎯 50 Questions / 6 min</button>
+      </div>
+
+      <h3>20 Question </h3>
+      <p><i>This questions are not shuffled - they appear in a fixed order within each set</i></p>
       <div id="sections20" class="sections">
         <button class="modeBtn disabled" data-mode="regular20" value="1">1-20</button>
         <button class="modeBtn disabled" data-mode="regular20" value="2">21-40</button>
@@ -61,18 +69,13 @@
         <button class="modeBtn disabled" data-mode="regular20" value="5">81-100</button>
       </div>
 
-      <h3>100 Question Sections</h3>
+      <h3>100 Question </h3>
+      <p><i>This questions are not shuffled - they appear in a fixed order within each set</i></p>
       <div id="sections100" class="sections">
         <button class="modeBtn disabled">1-100</button>
         <button class="modeBtn disabled">101-200</button>
         <button class="modeBtn disabled">201-300</button>
         <button class="modeBtn disabled">301-400</button>
-      </div>
-
-      <h3>Random Timed Modes</h3>
-      <div class="timedModes">
-        <button class="modeBtn" data-mode="random20">⚡ 20 Questions / 3 min</button>
-        <button class="modeBtn" data-mode="random50">🎯 50 Questions / 6 min</button>
       </div>
     </div>
 
@@ -97,9 +100,12 @@
 
     <!-- Results -->
     <div id="results" class="hidden">
-      <h2>⭐ Quiz Completed!</h2>
-      <h2 id="score"></p>
-      <h2 id="time"></p>
+      <h1>⭐ Quiz Completed!</h1>
+      
+      <div>
+        <h2 id="score"></p>
+        <h2 id="time"></p>
+      </div>
 
       <button id="backToMenu">⬅ Back to Menu</button>
     </div>
