@@ -7,12 +7,17 @@ body {
 }
 
 .container {
-  background: white;
-  padding: 30px;
-  border-radius: 16px;
-  width: 800px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  padding-bottom: 100px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
 }
+
+
 
 .hidden { display: none; }
 
@@ -23,24 +28,20 @@ body {
   margin-bottom: 20px;
 }
 
-button {
-  cursor: pointer;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #007bff;
-  color: white;
-  transition: 0.2s;
-  font-weight: 600;
-  font-size: 14px;
+#header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 
-button:hover { background: #0056b3; }
-
-button.disabled {
-  background: #ddd;
-  color: #777;
-  cursor: not-allowed;
+#navbar {
+  display: grid;
+  grid-template-columns: 135px auto 40px;
+  align-content: center;
+  align-items: center;
+  background-color: #5c4ee5;
+  padding: 20px;
 }
 
 #quizHeader {
@@ -49,24 +50,6 @@ button.disabled {
   margin-bottom: 12px;
   font-weight: bold;
 }
-
-#feedback {
-  margin: 10px 0;
-}
-
-.correct { color: green; }
-.incorrect { color: red; }
-
-#leaderboardTable {
-  width: 100%;
-  border-collapse: collapse;
-}
-#leaderboardTable th, #leaderboardTable td {
-  border: 1px solid #ddd;
-  padding: 6px 10px;
-  text-align: left;
-}
-#leaderboardTable th { background: #eee; }
 
 /* Question images */
 .q-img, .opt-img {
@@ -109,6 +92,7 @@ button.disabled {
 }
 
 /* Input style for text questions */
+
 #inputAnswer {
   width: 100%;
   padding: 8px 10px;
@@ -126,17 +110,109 @@ button.disabled {
   margin: 10px;
 } 
 
-#header {
-  display: grid;
-  grid-template-columns: auto 40px;
-  align-content: center;
-  align-items: center
+
+.correct { color: green; }
+.incorrect { color: red; }
+
+/* Leaderboards Block */
+
+#leaderboardTable {
+  border-collapse: collapse;
+}
+#leaderboardTable th, #leaderboardTable td {
+  border: 1px solid #ddd;
+  padding: 6px 10px;
+  text-align: left;
+}
+#leaderboardTable th { background: #eee; }
+
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border-top: 2px solid #ddd;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+  z-index: 100;
+}
+
+#bottomBar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 20px;
+  gap: 20px;
+}
+
+
+#feedback {
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #f8f9fa;
+  color: #333;
+  min-height: 22px;
+  line-height: 1.3em;
+}
+
+/* Buttons */
+
+button {
+  cursor: pointer;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: white;
+  transition: 0.2s;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+button:hover { background: #0056b3; }
+
+button.disabled {
+  background: #ddd;
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* Button group */
+#buttonBlock {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  gap: 10px;
+}
+
+#buttonBlock button {
+  min-width: 100px;
+  padding: 10px;
+}
+
+.submitBtn {
+  background-color: #28a745;
+  color: white;
+}
+.submitBtn:hover { background-color: #218838; }
+
+.nextBtn {
+  background-color: #007bff;
+  color: white;
+}
+.nextBtn:hover { background-color: #0069d9; }
+
+
+#backToMenu {
+  margin: 20px 0;
 }
 
 #changeUserBtn {
   display: block;
   height: 40px;
-  background: #ff9800;
+  background-color: transparent;
   border-radius: 8px;
   padding: 6px;
   color: white;
@@ -148,25 +224,91 @@ button.disabled {
   background: #e68900;
 }
 
-#feedback {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 20px 0;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background-color: #fafafa;
+
+/* ========== Tablets (landscape + portrait) ========== */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 90%;
+    margin: 20px auto;
+    padding: 18px;
+  }
+
+  h1, h2, h3 {
+    font-size: 1.1em;
+  }
+
+  .option-label {
+    font-size: 15px;
+  }
+
+  .submitBtn {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
 }
 
-#buttonBlock {
-  margin: 20px 0;
+/* ========== iPhones / Small screens (portrait) ========== */
+@media (max-width: 768px) {
+  body {
+    margin: 0;
+    padding: 0;
+    background: #f8f9fa;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 12px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  h1, h2, h3 {
+    font-size: 1em;
+    line-height: 1.3em;
+  }
+
+  .option-card {
+    padding: 8px 10px;
+    margin: 8px 0;
+  }
+
+  .option-label {
+    font-size: 14px;
+  }
+
+  .q-img, .opt-img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  #changeUserBtn {
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 13px;
+  }
+
+  .submitBtn, .nextBtn {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+
+  #feedback {
+    font-size: 13px;
+    padding: 5px;
+  }
 }
 
-#buttonBlock button {
-  min-width: 100px;
-  padding: 10px;
-}
+/* ========== Very small phones (iPhone SE, etc.) ========== */
+@media (max-width: 400px) {
+  .option-label {
+    font-size: 13px;
+  }
 
-#backToMenu {
-  margin: 20px 0;
+  .submitBtn {
+    font-size: 13px;
+    padding: 8px;
+  }
 }
