@@ -124,8 +124,25 @@ function generateModeButtons() {
   });
 }
 
-function shuffle(arr) {
-  return arr.sort(() => Math.random() - 0.5);
+function shuffle(arr, count) {
+  if (count > arr.length) {
+    throw new Error(
+      `Requested ${count} random items, but only ${arr.length} available.`
+    );
+  }
+
+  const result = [];
+  const used = new Set();
+
+  while (result.length < count) {
+    const index = Math.floor(Math.random() * arr.length);
+    if (!used.has(index)) {
+      used.add(index);
+      result.push(arr[index]);
+    }
+  }
+
+  return result;
 }
 
 // --- START QUIZ MODE ---
@@ -138,7 +155,7 @@ function startSectionMode(count, start, end) {
 
 function startRandomMode(count, timeLimit) {
   quizState.mode = `random_${count}`;
-  quizState.selectedQuestions = shuffle(questions).slice(0, count);
+  quizState.selectedQuestions = shuffle(questions, count);
   quizState.timeLimit = timeLimit;
   startQuiz();
 }
