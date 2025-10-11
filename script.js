@@ -210,7 +210,7 @@ function showQuestion() {
   const submitBtn = document.getElementById("submitBtn");
   const info = document.getElementById("questionCountInfo");
 
-  qContainer.innerHTML = `<h3>${q.number}. ${q.question}</h3>`;
+  qContainer.innerHTML = `<p>${q.number}. ${q.question}</p>`;
   if (q.question_images && q.question_images.length)
     q.question_images.forEach(img => {
       qContainer.innerHTML += `<img src="images/${img}" class="q-img" />`;
@@ -318,7 +318,7 @@ function endQuiz() {
   const scoreText = `🏆 You scored ${quizState.score} / ${quizState.selectedQuestions.length}`;
   document.getElementById("score").textContent = scoreText;
   document.getElementById("time").textContent = `⏱️ Time: ${elapsed}s`;
-  
+
 }
 
 
