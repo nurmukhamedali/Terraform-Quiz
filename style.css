@@ -114,19 +114,6 @@ body {
 .correct { color: green; }
 .incorrect { color: red; }
 
-/* Leaderboards Block */
-
-#leaderboardTable {
-  border-collapse: collapse;
-}
-#leaderboardTable th, #leaderboardTable td {
-  border: 1px solid #ddd;
-  padding: 6px 10px;
-  text-align: left;
-}
-#leaderboardTable th { background: #eee; }
-
-
 #footer {
   position: fixed;
   bottom: 0;

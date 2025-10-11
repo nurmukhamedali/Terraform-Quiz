@@ -23,7 +23,6 @@ const quizState = {
 const regDiv = document.getElementById("registration");
 const modeDiv = document.getElementById("modeSelection");
 const quizDiv = document.getElementById("quizContainer");
-const leaderboardDiv = document.getElementById("leaderboard");
 
 // Load questions and adjust UI ranges/modes
 async function loadQuestions() {
@@ -146,7 +145,6 @@ function startRandomMode(count, timeLimit) {
 // ---- QUIZ START ----
 function startQuiz() {
   modeDiv.classList.add("hidden");
-  leaderboardDiv.classList.add("hidden");
   quizDiv.classList.remove("hidden");
   quizState.score = 0;
   quizState.currentIndex = 0;
@@ -199,7 +197,6 @@ function updateTimerDisplay(time) {
 document.getElementById("backToMenu").onclick = () => {
   document.getElementById("results").classList.add("hidden");
   document.getElementById("questionCountInfo").classList.remove("hidden");
-  leaderboardDiv.classList.add("hidden");
   modeDiv.classList.remove("hidden");
 };
 
@@ -314,34 +311,14 @@ function endQuiz() {
   if (quizState.timer) clearInterval(quizState.timer);
 
   quizDiv.classList.add("hidden");
-  leaderboardDiv.classList.remove("hidden");
   document.getElementById("results").classList.remove("hidden");
 
   const elapsed = Math.floor((Date.now() - quizState.startTime) / 1000);
-  const modeKey = `leaderboard_${quizState.mode}`;
-  const lb = JSON.parse(localStorage.getItem(modeKey)) || [];
 
-  const scoreText = `You scored ${quizState.score} / ${quizState.selectedQuestions.length}`;
+  const scoreText = `🏆 You scored ${quizState.score} / ${quizState.selectedQuestions.length}`;
   document.getElementById("score").textContent = scoreText;
-  document.getElementById("time").textContent = `Time: ${elapsed}s`;
+  document.getElementById("time").textContent = `⏱️ Time: ${elapsed}s`;
 
-  lb.push({ email: quizState.email, score: quizState.score, time: elapsed });
-  lb.sort((a, b) => b.score - a.score || a.time - b.time);
-  localStorage.setItem(modeKey, JSON.stringify(lb));
-
-  renderLeaderboard(modeKey);
-}
-
-// --- DISPLAY LEADERBOARD ---
-function renderLeaderboard(key) {
-  const tbody = document.querySelector("#leaderboardTable tbody");
-  const data = JSON.parse(localStorage.getItem(key)) || [];
-  tbody.innerHTML = "";
-  data.forEach(row => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${row.email}</td><td>${row.score}</td><td>${row.time}</td>`;
-    tbody.appendChild(tr);
-  });
 }
 
 
