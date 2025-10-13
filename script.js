@@ -251,6 +251,7 @@ function showQuestion() {
   } else {
     q.options.forEach(opt => {
       const div = document.createElement("div");
+      div.classList.add("option-block");
       const input = document.createElement("input");
       input.type = q.question_type;
       input.name = "questionOption";
@@ -280,7 +281,7 @@ function checkAnswer(q) {
   const nextBtn = document.getElementById("nextBtn");
   const submitBtn = document.getElementById("submitBtn");
 
-  feedback.classList.remove("hidden")
+  feedback.classList.remove("hidden");
   submitBtn.classList.add("hidden");
 
 
@@ -300,6 +301,21 @@ function checkAnswer(q) {
   }
 
   const isCorrect = correct.length === user.length && user.every(a => correct.includes(a));
+
+  document.querySelectorAll('.option-block').forEach(block => {
+    let input = block.querySelector('input');
+    let option = input.id.toLowerCase().trim();
+
+    // If this option is correct → green
+    if (correct.includes(option)) {
+      block.classList.add("correct-option");
+    }
+
+    // If user selected but it's wrong → red
+    if (user.includes(option) && !correct.includes(option)) {
+      block.classList.add("incorrect-option");
+    }
+  });
 
   if (isCorrect) {
     quizState.score++;

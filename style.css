@@ -66,7 +66,7 @@ body {
 }
 
 /* Option styling */
-#options div  {
+.option-block  {
   display: flex;
   align-items: center;
   border: 1px solid #ccc;
@@ -76,6 +76,16 @@ body {
   cursor: pointer;
   transition: all 0.2s ease;
   background-color: #fafafa;
+}
+
+.correct-option {
+  border: 1px solid #28a745;
+  background-color: #e1f5e6;
+}
+
+.incorrect-option {
+  border: 1px solid #ea727d;
+  background-color: #ffcfd4;
 }
 
 #options div:hover {
@@ -140,7 +150,7 @@ body {
 
 
 #feedback {
-  font-size: 14px;
+  font-size: 16px;
   padding: 6px 10px;
   border-radius: 6px;
   background: #f8f9fa;
