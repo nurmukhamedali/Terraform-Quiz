@@ -3597,20 +3597,17 @@
     "number": 130,
     "question": " You are writing a child Terraform module which provisions an AWS instance. You want to make use of the IP address returned in the root configuration. You name the instance resource \"main\". Which of these is the correct way to define the output value using HCL2?",
     "question_type": "radio",
-    "question_images": [
-      "image16.png",
-      "image17.png"
-    ],
+    "question_images": [],
     "options": [
       {
         "id": "A",
         "text": "",
-        "answer_image": null
+        "answer_image": "image16.png"
       },
       {
         "id": "B",
         "text": "",
-        "answer_image": null
+        "answer_image": "image17.png"
       }
     ],
     "answer": "A",
@@ -3853,26 +3850,22 @@
     "number": 139,
     "question": " You are creating a Terraform configuration which needs to make use of multiple providers, one for AWS and one for Datadog. Which of the following provider blocks would allow you to do this?",
     "question_type": "radio",
-    "question_images": [
-      "image19.png",
-      "image20.png",
-      "image21.png"
-    ],
+    "question_images": [],
     "options": [
       {
         "id": "A",
         "text": "",
-        "answer_image": null
+        "answer_image": "image19.png"
       },
       {
         "id": "B",
         "text": "",
-        "answer_image": null
+        "answer_image": "image20.png"
       },
       {
         "id": "C",
         "text": "",
-        "answer_image": null
+        "answer_image": "image21.png"
       }
     ],
     "answer": "B",
@@ -4950,20 +4943,17 @@
     "number": 176,
     "question": "In Terraform HCL, an object type of object({ name=string, age=number }) would match this value:",
     "question_type": "radio",
-    "question_images": [
-      "image25.png",
-      "image26.png"
-    ],
+    "question_images": [],
     "options": [
       {
         "id": "A",
         "text": "",
-        "answer_image": null
+        "answer_image": "image25.png"
       },
       {
         "id": "B",
         "text": "",
-        "answer_image": null
+        "answer_image": "image26.png"
       }
     ],
     "answer": "B",
@@ -6211,32 +6201,27 @@
     "number": 221,
     "question": " You are writing a child Terraform module which provisions an AWS instance. You want to make use of the IP address returned in the root configuration. You name the instance resource \u201cmain\u201d. Which of these is the correct way to define the output value using HCL2?",
     "question_type": "radio",
-    "question_images": [
-      "image30.png",
-      "image31.png",
-      "image32.png",
-      "image33.png"
-    ],
+    "question_images": [],
     "options": [
       {
         "id": "A",
         "text": "",
-        "answer_image": null
+        "answer_image": "image30.png"
       },
       {
         "id": "B",
         "text": "",
-        "answer_image": null
+        "answer_image": "image31.png"
       },
       {
         "id": "C",
         "text": "",
-        "answer_image": null
+        "answer_image": "image32.png"
       },
       {
         "id": "D",
         "text": "",
-        "answer_image": null
+        "answer_image": "image33.png"
       }
     ],
     "answer": "A",
@@ -7029,32 +7014,27 @@
     "number": 249,
     "question": " You are creating a reusable Terraform configuration and want to include a billing_dept tag so your Finance team can track team-specific spending on resources. Which of the following billing_dept variable declarations will allow you to do this?",
     "question_type": "radio",
-    "question_images": [
-      "image35.png",
-      "image36.png",
-      "image37.png",
-      "image38.png"
-    ],
+    "question_images": [],
     "options": [
       {
         "id": "A",
         "text": "",
-        "answer_image": null
+        "answer_image": "image35.png"
       },
       {
         "id": "B",
         "text": "",
-        "answer_image": null
+        "answer_image": "image36.png"
       },
       {
         "id": "C",
         "text": "",
-        "answer_image": null
+        "answer_image": "image37.png"
       },
       {
         "id": "D",
         "text": "",
-        "answer_image": null
+        "answer_image": "image38.png"
       }
     ],
     "answer": "C",
@@ -7212,32 +7192,27 @@
     "number": 255,
     "question": "In Terraform HCL, an object type of object({ name=string, age=number }) would match this value:",
     "question_type": "radio",
-    "question_images": [
-      "image39.png",
-      "image40.png",
-      "image41.png",
-      "image42.png"
-    ],
+    "question_images": [],
     "options": [
       {
         "id": "A",
         "text": "",
-        "answer_image": null
+        "answer_image": "image39.png"
       },
       {
         "id": "B",
         "text": "",
-        "answer_image": null
+        "answer_image": "image40.png"
       },
       {
         "id": "C",
         "text": "",
-        "answer_image": null
+        "answer_image": "image41.png"
       },
       {
         "id": "D",
         "text": "",
-        "answer_image": null
+        "answer_image": "image42.png"
       }
     ],
     "answer": "B",
@@ -9066,32 +9041,27 @@
     "number": 321,
     "question": " You are writing a child Terraform module that provisions an AWS instance. You want to reference the IP address returned by the child module in the root configuration. You name the instance resource \"main\". Which of these is the correct way to define the output value?",
     "question_type": "radio",
-    "question_images": [
-      "image44.png",
-      "image45.png",
-      "image46.png",
-      "image47.png"
-    ],
+    "question_images": [],
     "options": [
       {
         "id": "A",
         "text": "",
-        "answer_image": null
+        "answer_image": "image44.png"
       },
       {
         "id": "B",
         "text": "",
-        "answer_image": null
+        "answer_image": "image45.png"
       },
       {
         "id": "C",
         "text": "",
-        "answer_image": null
+        "answer_image": "image46.png"
       },
       {
         "id": "D",
         "text": "",
-        "answer_image": null
+        "answer_image": "image47.png"
       }
     ],
     "answer": "A",
