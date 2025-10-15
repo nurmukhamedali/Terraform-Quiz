@@ -261,9 +261,9 @@ function showQuestion() {
       const label = document.createElement("label");
       label.htmlFor = opt.id;
       label.textContent = opt.text;
-      div.appendChild(label);
       if (opt.answer_image)
-        div.innerHTML += `<img src="images/${opt.answer_image}" class="opt-img" />`;
+        label.innerHTML += `<img src="images/${opt.answer_image}" class="opt-img" />`;
+      div.appendChild(label);
       optContainer.appendChild(div);
     });
   }
