@@ -2971,7 +2971,6 @@
     "question": " FILL BLANK - In the below configuration, how would you reference the module output vpc_id? Type your answer in the field provided. The text field is not case sensitive and all variations of the correct answer are accepted.",
     "question_type": "input",
     "question_images": [
-      "image7.png",
       "image12.png"
     ],
     "options": null,
@@ -3538,7 +3537,7 @@
     "options": [
       {
         "id": "A",
-        "text": "null-ex\u05c0\u00b5\u05c1",
+        "text": "null-exec",
         "answer_image": null
       },
       {
@@ -3694,7 +3693,7 @@
       },
       {
         "id": "C",
-        "text": "ma\u05c1\u20ac",
+        "text": "map",
         "answer_image": null
       },
       {
@@ -4652,7 +4651,7 @@
       },
       {
         "id": "C",
-        "text": "Nothing \u05d2\u20ac\" modules stored on GitHub always default to version 1.0.0",
+        "text": "Nothing. modules stored on GitHub always default to version 1.0.0",
         "answer_image": null
       },
       {
@@ -5417,8 +5416,8 @@
       }
     ],
     "answer": [
-      "B",
-      "E"
+      "A",
+      "B"
     ],
     "answer_feedback": "When using a module from the public Terraform Module Registry, you must specify the module's source address (B) to tell Terraform where to find the module. You should also specify the version (E) to ensure reproducible builds, though technically it's considered a best practice rather than a strict requirement."
   },
@@ -5520,7 +5519,7 @@
       }
     ],
     "answer": "A",
-    "answer_feedback": ""
+    "answer_feedback": "Correct!"
   },
   {
     "number": 197,
@@ -7479,7 +7478,7 @@
   },
   {
     "number": 266,
-    "question": " They don\u2019t know which VM Terraform manages but do have a list of all active VM IDs. Which of the following methods could you use to discover which instance Terraform manages? manages",
+    "question": "A developer accidentally launched a VM (virtual machine) outside of the Terraform work ow and ended up with two servers with the same name. \n They don’t know which VM Terraform manages but do have a list of all active VM IDs. \n Which of the following methods could you use to discover which instance Terraform manages?",
     "question_type": "radio",
     "question_images": [],
     "options": [
@@ -7635,7 +7634,7 @@
   {
     "number": 272,
     "question": "When using Terraform to deploy resources into Azure, which scenarios are true regarding state files? (Choose two.)",
-    "question_type": "radio",
+    "question_type": "checkbox",
     "question_images": [],
     "options": [
       {
@@ -7659,7 +7658,10 @@
         "answer_image": null
       }
     ],
-    "answer": "D",
+    "answer": [
+      "A",
+      "D"
+    ],
     "answer_feedback": "Manual changes through cloud consoles don't update Terraform's state. State updates only during Terraform operations like plan or apply ."
   },
   {
