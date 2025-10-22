@@ -118,8 +118,8 @@ function generateModeButtons() {
   // Timed Modes
   document.querySelectorAll(".modeBtn").forEach(btn => {
     btn.onclick = () => {
-        if (btn.dataset.mode === "random20") startRandomMode(20, 180);
-        else if (btn.dataset.mode === "random50") startRandomMode(50, 360);
+        if (btn.dataset.mode === "random20") startRandomMode(20, 300);
+        else if (btn.dataset.mode === "random50") startRandomMode(50, 720);
     };
   });
 }

@@ -27,8 +27,8 @@ body {
 }
 
 .timedModes {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
   margin-bottom: 20px;
 }
@@ -317,7 +317,7 @@ button.disabled {
     padding: 8px;
   }
 
-  .sections, .timedModes {
+  .sections{
     grid-template-columns: auto auto auto;
   }
 }
