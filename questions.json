@@ -782,7 +782,7 @@
       }
     ],
     "answer": "A",
-    "answer_feedback": ""
+    "answer_feedback": "Secure variable storage is available only in Terraform Enterprise or Cloud workspaces and not in Terraform CLI"
   },
   {
     "number": 29,
@@ -1120,7 +1120,7 @@
       },
       {
         "id": "D",
-        "text": "Nothing \u05d2\u20ac\" modules stored on the public Terraform Module Registry always default to version 1.0.0",
+        "text": "Nothing. modules stored on the public Terraform Module Registry always default to version 1.0.0",
         "answer_image": null
       }
     ],
@@ -1686,7 +1686,6 @@
     ],
     "options": null,
     "answer": [
-      "-out=FILENAME",
       "-out"
     ],
     "answer_feedback": "The -out flag allows you to save the execution plan to a specified file."
@@ -1894,7 +1893,7 @@
     "options": [
       {
         "id": "A",
-        "text": "Pass variables to Terraform with a \u05d2\u20ac\"var flag",
+        "text": "Pass variables to Terraform with a -var flag",
         "answer_image": null
       },
       {
@@ -2063,7 +2062,7 @@
   },
   {
     "number": 76,
-    "question": " Which of these options is the most secure place to store secrets foe connecting to a Terraform remote backend?",
+    "question": " Which of these options is the most secure place to store secrets for connecting to a Terraform remote backend?",
     "question_type": "radio",
     "question_images": [],
     "options": [
@@ -2089,7 +2088,7 @@
       }
     ],
     "answer": "C",
-    "answer_feedback": ""
+    "answer_feedback": "Defined in a connection configuration outside of Terraform"
   },
   {
     "number": 77,
@@ -2824,7 +2823,7 @@
       }
     ],
     "answer": "B",
-    "answer_feedback": ""
+    "answer_feedback": "Marking the variable as sensitive cannot be used to keep secrets out of Terraform configuration files"
   },
   {
     "number": 103,
@@ -3517,7 +3516,7 @@
       },
       {
         "id": "C",
-        "text": "terraform fmt \u05d2\u20ac\"list -recursive",
+        "text": "terraform fmt list -recursive",
         "answer_image": null
       },
       {
@@ -7328,7 +7327,7 @@
   },
   {
     "number": 260,
-    "question": " While attempting to deploy resources into your cloud provider using Terraform, you begin to see some odd behavior and experience slow responses. In order to troubleshoot you decide to turn on Terraform debugging. Which environment variables must be configured to make Terraform\u2019s logging more verbose?",
+    "question": " While attempting to deploy resources into your cloud provider using Terraform, you begin to see some odd behavior and experience slow responses. In order to troubleshoot you decide to turn on Terraform debugging. Which environment variables must be configured to make Terraform's logging more verbose?",
     "question_type": "radio",
     "question_images": [],
     "options": [
@@ -7529,7 +7528,7 @@
       }
     ],
     "answer": "C",
-    "answer_feedback": "Never edit the state file directly\u2014it can corrupt state and break resource tracking. Use Terraform commands for state modifications."
+    "answer_feedback": "Never edit the state file directly. it can corrupt state and break resource tracking. Use Terraform commands for state modifications."
   },
   {
     "number": 268,
