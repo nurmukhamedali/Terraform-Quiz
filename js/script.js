@@ -25,17 +25,38 @@ const modeDiv = document.getElementById("modeSelection");
 const quizDiv = document.getElementById("quizContainer");
 const results = document.getElementById("results");
 
+// Map page paths to their respective JSON files
+const pageJSONMap = {
+  "/aws.html": "data/questions_aws.json",
+  "/terraform.html": "data/questions_terraform.json"
+};
+
 // Load questions and adjust UI ranges/modes
 async function loadQuestions() {
-  const res = await fetch("questions.json");
-  questions = await res.json();
+  try {
+    // Determine current path
+    const path = "/" + window.location.pathname.split("/").pop();
+    const jsonPath = pageJSONMap[path];
 
-  const total = questions.length;
+    if (!jsonPath) {
+      console.warn("No questions file mapped for this page.");
+      return;
+    }
+    console.log(jsonPath)
+    const res = await fetch(jsonPath);
+    questions = await res.json();
 
-  generateModeButtons();
+    const total = questions.length;
 
-  const info = document.getElementById("questionCountInfo");
-  if (info) info.textContent = `📘 Total questions available: ${total}`;
+    generateModeButtons();
+
+    const info = document.getElementById("questionCountInfo");
+    if (info) info.textContent = `📘 Total questions available: ${total}`;
+  } catch (err) {
+    console.error(err);
+    const info = document.getElementById("questionCountInfo");
+    if (info) info.textContent = "❌ Failed to load questions.";
+  }
 }
 
 // Registration handling

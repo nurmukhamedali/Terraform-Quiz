@@ -16,9 +16,6 @@ body {
   transition: all 0.2s ease;
 }
 
-
-
-
 .sections {
   display: grid;
   grid-template-columns: auto auto auto auto;

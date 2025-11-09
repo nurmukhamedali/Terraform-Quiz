@@ -1,4 +1,4 @@
 # Local .terraform directories
-**/scripts/*
-**/backup-json/*
+**/un-scripts/*
+**/un-backup-json/*
 
