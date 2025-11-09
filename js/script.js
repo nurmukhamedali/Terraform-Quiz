@@ -27,8 +27,8 @@ const results = document.getElementById("results");
 
 // Map page paths to their respective JSON files
 const pageJSONMap = {
-  "/aws.html": "data/questions_aws.json",
-  "/terraform.html": "data/questions_terraform.json"
+  "/aws.html": "../data/questions_aws.json",
+  "/terraform.html": "../data/questions_terraform.json"
 };
 
 // Load questions and adjust UI ranges/modes
