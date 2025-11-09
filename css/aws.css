@@ -1,0 +1,29 @@
+#navbar {
+  display: grid;
+  grid-template-columns: 135px auto 40px;
+  align-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 20px 40px;
+}
+
+#changeUserBtn {
+  display: block;
+  height: 40px;
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 6px;
+  color: #252F3E;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#changeUserBtn:hover {
+  border: 1px solid #252F3E ;
+}
+
+#nextBtn, #backToMenu {
+  background-color: #f09711;
+  color: white;
+}
+#nextBtn:hover, #backToMenu:hover { background-color: #bd7202; }

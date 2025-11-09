@@ -1,15 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="css/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Quiz App</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/main.css" />
 </head>
 <body>
-    <h1>Welcome</h1>
-    <div class="options">
-        <a href="html/aws.html">AWS</a>
-        <a href="html/terraform.html">Terraform</a>
+  <div class="container">
+    <div id="header">
+      <div id="navbar">
+        <div id="links">
+            <a href="https://github.com/nurmukhamedali" target="_blank">
+                <img src="../images/public/github-logo.png" height="40">
+            </a>
+            <a href="https://www.linkedin.com/in/ali-begilda-b18919395/" target="_blank">
+                <img src="../images/public/linkedin-logo.png" height="40">
+            </a>
+            <img src="../images/public/aws-logo.png" height="40">
+            <img src="../images/public/terraform-logo.png" height="40">
+            <img src="../images/public/docker-logo.png" height="40">
+            <img src="../images/public/kubernetes-logo.png" height="40">
+        </div>
+        <button id="changeUserBtn" class="hidden">➜]</button>
+      </div>
     </div>
+    <!-- Topics -->
+    <h1>Select Exam Topic</h1>
+    <div id="cards-container">
+        <!-- AWS Card -->
+         <a href="html/aws.html">
+            <div class="card aws">
+                <img src="../images/public/aws-badge.png" alt="AWS SAA Badge" class="badge">
+                <p>Certificate: Amazon Solution Architect Associate</p>
+            </div>
+         </a>
+        
+
+        <!-- Terraform Card -->
+        <a href="html/terraform.html">
+            <div class="card terraform">
+                <img src="../images/public/terraform-badge.png" alt="Terraform Badge" class="badge">
+                <p>Certificate: Terraform Associate (003)</p>
+            </div>
+        </a>
+    </div>
+  </div>
 </body>
 </html>

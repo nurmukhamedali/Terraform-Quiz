@@ -6,6 +6,7 @@ let questions = [];
 // =========================
 // GLOBAL STATE
 // =========================
+const path = "/" + window.location.pathname.split("/").pop();
 const quizState = {
   email: "",
   mode: "",
@@ -35,14 +36,12 @@ const pageJSONMap = {
 async function loadQuestions() {
   try {
     // Determine current path
-    const path = "/" + window.location.pathname.split("/").pop();
     const jsonPath = pageJSONMap[path];
 
     if (!jsonPath) {
       console.warn("No questions file mapped for this page.");
       return;
     }
-    console.log(jsonPath)
     const res = await fetch(jsonPath);
     questions = await res.json();
 
@@ -95,46 +94,38 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+function generateSectionButtons(section, range, total, totalExpected){
+  for (let i = 1; i <= totalExpected / range; i++) {
+    const start = (i - 1) * range + 1;
+    const end = i * range;
+    const btn = document.createElement("button");
+    btn.textContent = `${start}-${end}`;
+    if (end <= total) {
+      btn.onclick = () => startSectionMode(range, start, end);
+    } else {
+      btn.classList.add("disabled");
+      btn.disabled = true;
+    }
+    section.appendChild(btn);
+  }
+}
+
 
 function generateModeButtons() {
   const total = questions.length; // Available questions
-  const totalExpected = 400;
+  const totalExpected = roundUp(total);
 
-  const sec20 = document.getElementById("sections20");
+  const sec25 = document.getElementById("sections25");
   const sec100 = document.getElementById("sections100");
 
-  sec20.innerHTML = "";
+  sec25.innerHTML = "";
   sec100.innerHTML = "";
 
   // 20-question sections
-  for (let i = 1; i <= totalExpected / 20; i++) {
-    const start = (i - 1) * 20 + 1;
-    const end = i * 20;
-    const btn = document.createElement("button");
-    btn.textContent = `${start}-${end}`;
-    if (end <= total) {
-      btn.onclick = () => startSectionMode(20, start, end);
-    } else {
-      btn.classList.add("disabled");
-      btn.disabled = true;
-    }
-    sec20.appendChild(btn);
-  }
+  generateSectionButtons(sec25, 25, total, totalExpected)
 
   // 100-question sections
-  for (let i = 1; i <= totalExpected / 100; i++) {
-    const start = (i - 1) * 100 + 1;
-    const end = i * 100;
-    const btn = document.createElement("button");
-    btn.textContent = `${start}-${end}`;
-    if (end <= total) {
-      btn.onclick = () => startSectionMode(100, start, end);
-    } else {
-      btn.classList.add("disabled");
-      btn.disabled = true;
-    }
-    sec100.appendChild(btn);
-  }
+  generateSectionButtons(sec100, 100, total, totalExpected)
 
   // Timed Modes
   document.querySelectorAll(".modeBtn").forEach(btn => {
@@ -164,6 +155,10 @@ function shuffle(arr, count) {
   }
 
   return result;
+}
+
+function roundUp(x, n = 100) {
+    return Math.ceil(x / n) * n;
 }
 
 // --- START QUIZ MODE ---
