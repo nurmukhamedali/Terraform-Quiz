@@ -247,7 +247,7 @@ function showQuestion() {
   qContainer.innerHTML = `<p>${q.number}. ${q.question}</p>`;
   if (q.question_images && q.question_images.length)
     q.question_images.forEach(img => {
-      qContainer.innerHTML += `<img src="images/${img}" class="q-img" />`;
+      qContainer.innerHTML += `<img src="../images/terraform/${img}" class="q-img" />`;
     });
 
   optContainer.innerHTML = "";
@@ -278,7 +278,7 @@ function showQuestion() {
       label.htmlFor = opt.id;
       label.textContent = opt.text;
       if (opt.answer_image)
-        label.innerHTML += `<img src="images/${opt.answer_image}" class="opt-img" />`;
+        label.innerHTML += `<img src="../images/terraform/${opt.answer_image}" class="opt-img" />`;
       div.appendChild(label);
       optContainer.appendChild(div);
     });
